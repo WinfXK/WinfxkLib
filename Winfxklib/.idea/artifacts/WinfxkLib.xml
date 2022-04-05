@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="WinfxkLib">
+    <output-path>D:/数据内容/Java/Nukkit/1.11.0.23/plugins</output-path>
+    <root id="archive" name="WinfxkLib.jar">
+      <element id="module-output" name="Winfxklib" />
+      <element id="directory" name="res">
+        <element id="dir-copy" path="$PROJECT_DIR$/res" />
+      </element>
+      <element id="directory" name="language">
+        <element id="file-copy" path="$PROJECT_DIR$/res/Message.yml" output-file-name="chs.yml" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

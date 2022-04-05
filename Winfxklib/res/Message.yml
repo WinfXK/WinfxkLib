@@ -1,0 +1,67 @@
+lang: chs
+插件启动: '{RGBTextStart}{PluginName}启动(耗时: {loadTime})...{RGBTextEnd}        §6欢迎{RGBTextStart}使用{PluginName}{RGBTextEnd}§f(*￣︶￣)'
+插件关闭: '{RGBTextStart}{PluginName}关闭！本次使用时长： {loadTime})...{RGBTextEnd}'
+NotPlayer: §4请在游戏内执行此命令!
+Command:
+  AdminCommand:
+    无权执行: 你没有权限执行此命令！
+    Description: 管理员命令
+    usageMessage: /WinfxkLib help
+    Help: 插件帮助
+    Add: 添加数据
+Form:
+  Back: '{RandColor}返回'
+  Exit: '{RandColor}关闭'
+  Confirm: '{RandColor}确定'
+  NotPermissions: §4你没有权限完成此操作！
+  PostData:
+    Title: '{RandColor}数据管理'
+    Content: " "
+    Itemlist: 物品列表管理
+  Itemlist:
+    Title: '{RandColor}物品列表管理'
+    Content: " "
+    AddItem: '{RandColor}添加物品支持'
+    DelItem: '{RandColor}删除物品支持'
+    AlterItem: '{RandColor}修改物品支持'
+  AlterItem:
+    Title: '{RandColor}修改物品数据'
+    Content: "当前是物品列表第{Page}页"
+    Name: 物品名称
+    ID: 物品ID
+    Damage: 物品Damage
+    Path: 物品贴图路径
+    Type: 贴图类型是否是网络贴图
+    NotData: §4没有可供修改的数据！
+    ItemStencil: '§f[§6{ID}§f:§6{Damage}§f]§b->§e{ItemName}'
+    UpPage: 上一页
+    NextPage: 下一页
+    NotInputID: §4请输入物品ID或输入的物品ID不合法(仅支持大于零的纯数字)！
+    NotInputDamage: §4请输入物品Damage或输入的物品Damage不合法！
+    NotInputName: §4请输入物品名称
+    NotInputPath: §4请输入物品贴图路径
+    AlterSucceed: 修改完成！
+  DelItem:
+    Title: '{RandColor}删除物品数据'
+    Content: " "
+    NextPage: 下一页
+    ItemStencil: '§f[§6{ID}§f:§6{Damage}§f]§b->§e{ItemName}'
+    NotData: §4没有可供修改的数据！
+    UpPage: 上一页
+    DelSucceed: 删除成功！
+    Affirm: 您确定要删除这个物品的数据吗？{n}{RandColor}物品ID：{ID}{n}{RandColor}物品Damage：{Damage}{n}{RandColor}物品名称：{Name}{n}{RandColor}物品图标路径：{Path}
+  AddItem:
+    Title: '{RandColor}添加物品数据'
+    Content: " "
+    Name: 物品名称
+    ID: 物品ID
+    Damage: 物品Damage
+    Path: 物品贴图路径
+    Type: 贴图类型是否是网络贴图
+    ItemStencil: '§f[§6{ID}§f:§6{Damage}§f]§b->§e{ItemName}'
+    UpPage: 上一页
+    NotInputID: §4请输入物品ID或输入的物品ID不合法(仅支持大于零的纯数字)！
+    NotInputDamage: §4请输入物品Damage或输入的物品Damage不合法！
+    NotInputName: §4请输入物品名称
+    NotInputPath: §4请输入物品贴图路径
+    AlterSucceed: 操作完成！
