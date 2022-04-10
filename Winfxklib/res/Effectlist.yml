@@ -1,0 +1,135 @@
+Effect1:
+  Path: textures/ui/speed_effect.png
+  ID: 1
+  Key: Speed
+  Name: 速度
+Effect2:
+  Path: textures/ui/slowness_effect.png
+  ID: 2
+  Key: Slowness
+  Name: 缓慢
+Effect3:
+  Path: textures/ui/haste_effect.png
+  ID: 3
+  Key: Haste
+  Name: 急迫
+Effect4:
+  Path: textures/ui/mining_fatigue_effect.png
+  ID: 4
+  Key: Mining_Fatigue
+  Name: 挖掘疲劳
+Effect5:
+  Path: textures/ui/strength_effect.png
+  ID: 5
+  Key: Strength
+  Name: 力量
+Effect6:
+  Path: textures/ui/health_boost_effect.png
+  ID: 6
+  Key: Instant_Health
+  Name: ' 瞬间资料'
+Effect7:
+  Path: textures/ui/strength_effect.png
+  ID: 7
+  Key: Instant_Damage
+  Name: ' 瞬间伤害'
+Effect8:
+  Path: textures/ui/jump_boost_effect.png
+  ID: 8
+  Key: Jump_Boost
+  Name: 跳跃提升
+Effect9:
+  Path: textures/ui/nausea_effect.png
+  ID: 9
+  Key: Nausea
+  Name: 反胃
+Effect10:
+  Path: textures/ui/regeneration_effect.png
+  ID: 10
+  Key: Regeneration
+  Name: 生命恢复
+Effect11:
+  Path: textures/ui/resistance_effect.png
+  ID: 11
+  Key: Resistance
+  Name: 抗性提升
+Effect12:
+  Path: textures/ui/fire_resistance_effect.png
+  ID: 12
+  Key: Fire_Resistance
+  Name: 防火
+Effect13:
+  Path: textures/ui/water_breathing_effect.png
+  ID: 13
+  Key: Water_Breathing
+  Name: 水下呼吸
+Effect14:
+  Path: textures/ui/invisibility_effect.png
+  ID: 14
+  Key: Invisibility
+  Name: 隐身
+Effect15:
+  Path: textures/ui/blindness_effect.png
+  ID: 15
+  Key: Blindness
+  Name: 失明
+Effect16:
+  Path: textures/ui/night_vision_effect.png
+  ID: 16
+  Key: Night_Vision
+  Name: 夜视
+Effect17:
+  Path: textures/ui/hunger_effect.png
+  ID: 17
+  Key: Hunger
+  Name: 饥饿
+Effect18:
+  Path: textures/ui/weakness_effect.png
+  ID: 18
+  Key: Weakness
+  Name: ' 虚弱'
+Effect19:
+  Path: textures/ui/poison_effect.png
+  ID: 19
+  Key: Poison
+  Name: 中毒
+Effect20:
+  Path: textures/ui/wither_effect.png
+  ID: 20
+  Key: Wither
+  Name: 凋零
+Effect21:
+  Path: textures/ui/health_boost_effect.png
+  ID: 21
+  Key: Health_Boost
+  Name: 生命提升
+Effect22:
+  Path: textures/ui/absorption_effect.png
+  ID: 22
+  Key: Absorption
+  Name: 伤害吸收
+Effect23:
+  Path: textures/ui/water_breathing_effect.png
+  ID: 23
+  Key: Saturatio
+  Name: 饱和
+Effect24:
+  Path: textures/ui/levitation_effect.png
+  ID: 24
+  Key: Levitation
+  Name: 漂浮
+Effect25:
+  Path: textures/ui/poison_effect.png
+  ID: 25
+  Key: FATAL_POISON
+  Name: 剧毒
+Effect26:
+  Path: textures/ui/conduit_power_effect.png
+  ID: 26
+  Key: COUNDIT_POWER
+  Name: 导管能量
+Effect27:
+  Path: textures/ui/slow_falling_effect.png
+  ID: 27
+  Key: SLOW_FALLING
+  Name: 缓慢下降

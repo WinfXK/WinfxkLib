@@ -20,13 +20,17 @@ import java.util.jar.JarFile;
  * @Createdate 2021/07/31 18:34:33
  */
 public class Check {
-    private final WinfxkLib kis;
+    private final MyBase kis;
     private int index = 0;
     public static Check check;
+    private String[] Meta, Mkdir;
+    private File ConfigDir;
 
-    public Check(WinfxkLib kis) {
+    public Check(MyBase kis, String[] Meta, String[] Mkdir) {
         this.kis = kis;
         check = this;
+        this.Meta = Meta;
+        this.Mkdir = Mkdir;
     }
 
     /**
@@ -38,11 +42,11 @@ public class Check {
         File file;
         PluginLogger log = kis.getLogger();
         String lang = Tool.getLanguage();
-        file = new File(WinfxkLib.MsgConfigName);
+        file = new File(kis.getConfigDir(), "language");
         if (!file.exists())
             file.mkdirs();
         try {
-            JarFile localJarFile = new JarFile(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getFile()));
+            JarFile localJarFile = new JarFile(new File(kis.getClass().getProtectionDomain().getCodeSource().getLocation().getFile()));
             Enumeration<JarEntry> entries = localJarFile.entries();
             File Jf, JFB;
             String JN, JP, JE;
@@ -62,7 +66,7 @@ public class Check {
                     JFB = new File(langFile, JN);
                     if (!JFB.exists())
                         try {
-                            Utils.writeFile(JFB, Utils.readFile(getClass().getResourceAsStream("/language/" + JN)));
+                            Utils.writeFile(JFB, Utils.readFile(kis.getClass().getResourceAsStream("/language/" + JN)));
                         } catch (Exception e) {
                             e.printStackTrace();
                             log.warning("Unable to get list of language files!");
@@ -80,12 +84,12 @@ public class Check {
             if (lang != null && getClass().getResource("/language/" + lang + ".yml") != null)
                 try {
                     log.info("Writing to the default language:" + lang);
-                    Utils.writeFile(Message.file, Utils.readFile(getClass().getResourceAsStream("/language/" + lang + ".yml")));
+                    Utils.writeFile(WinfxkLib.getMessage().file, Utils.readFile(kis.getClass().getResourceAsStream("/language/" + lang + ".yml")));
                 } catch (IOException e) {
                     e.printStackTrace();
                     log.error("§4The default language could not be initialized！");
                     try {
-                        Utils.writeFile(Message.file, Utils.readFile(getClass().getResourceAsStream("/res/Message.yml")));
+                        Utils.writeFile(WinfxkLib.getMessage().file, Utils.readFile(kis.getClass().getResourceAsStream("/res/Message.yml")));
                     } catch (IOException e1) {
                         e1.printStackTrace();
                         log.error("§4The default language could not be initialized！");
@@ -95,7 +99,7 @@ public class Check {
                 }
             else
                 try {
-                    Utils.writeFile(Message.file, Utils.readFile(getClass().getResourceAsStream("/res/Message.yml")));
+                    Utils.writeFile(WinfxkLib.getMessage().file, Utils.readFile(kis.getClass().getResourceAsStream("/res/Message.yml")));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                     log.error("§4The default language could not be initialized！");
@@ -109,16 +113,22 @@ public class Check {
      * 检查文件是否与默认的格式有错误
      */
     public int start() {
+        File file;
+        if (Mkdir != null)
+            for (String s : Mkdir) {
+                file = new File(kis.getDataFolder(), s);
+                if (!file.exists()) file.mkdirs();
+            }
         Message();
         Config config;
         Map<String, Object> map;
-        for (String string : WinfxkLib.Meta) {
-            config = new Config(new File(WinfxkLib.getConfigDir(), string));
+        for (String string : Meta) {
+            config = new Config(new File(kis.getConfigDir(), string));
             try {
                 map = Matc(Config.yaml.loadAs(Tool.getResource(string), Map.class), config.getMap());
                 config.setAll(map);
                 config.save();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 kis.getLogger().error("Unable to obtain resource: " + string);
                 continue;
             }

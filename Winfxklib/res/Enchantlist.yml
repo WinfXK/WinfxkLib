@@ -1,0 +1,144 @@
+Enchant0:
+  ID: 0
+  Key: PROTECTION
+  Name: 保护
+Enchant1:
+  ID: 1
+  Key: PROTECTION_FIRE
+  Name: 火焰保护
+Enchant2:
+  ID: 2
+  Key: PROTECTION_FALL
+  Name: 摔落保护
+Enchant3:
+  ID: 3
+  Key: BLAST_PROTECTION
+  Name: 爆炸保护
+Enchant4:
+  ID: 4
+  Key: PROJECTILE_PROTECTION
+  Name: 弹射物保护
+Enchant5:
+  ID: 5
+  Key: THORNS
+  Name: 荆棘
+Enchant6:
+  ID: 6
+  Key: RESPIRATION
+  Name: 水下呼吸
+Enchant7:
+  ID: 7
+  Key: DEPTH_STRIDER
+  Name: 深海探索者
+Enchant8:
+  ID: 8
+  Key: AQUA_AFFINITY
+  Name: 水下速掘
+Enchant9:
+  ID: 9
+  Key: SHARPNESS
+  Name: 锋利
+Enchant10:
+  ID: 10
+  Key: SMITE
+  Name: 亡灵杀手
+Enchant11:
+  ID: 11
+  Key: BANE_OF_ARTHROPODS
+  Name: 节肢杀手
+Enchant12:
+  ID: 12
+  Key: KNOCKBACK
+  Name: 击退
+Enchant13:
+  ID: 13
+  Key: FIRE_ASPECT
+  Name: 火焰附加
+Enchant14:
+  ID: 14
+  Key: LOOTING
+  Name: 抢夺
+Enchant15:
+  ID: 15
+  Key: EFFICIENCY
+  Name: 效率
+Enchant16:
+  ID: 16
+  Key: SILK_TOUCH
+  Name: 精准采集
+Enchant17:
+  ID: 17
+  Key: DURABILITY
+  Name: 耐久
+Enchant18:
+  ID: 18
+  Key: FORTUNE
+  Name: 时运
+Enchant19:
+  ID: 19
+  Key: POWER
+  Name: 力量
+Enchant20:
+  ID: 20
+  Key: PUNCH
+  Name: 冲击
+Enchant21:
+  ID: 21
+  Key: FLAME
+  Name: 火矢
+Enchant22:
+  ID: 22
+  Key: INFINITY
+  Name: 无限
+Enchant23:
+  ID: 23
+  Key: LUCK_OF_THE_SEA
+  Name: 海之眷顾
+Enchant24:
+  ID: 24
+  Key: LURE
+  Name: 饵钓
+Enchant25:
+  ID: 25
+  Key: FROST_WALKER
+  Name: 冰霜行者
+Enchant26:
+  ID: 26
+  Key: MENDING
+  Name: 经验修补
+Enchant27:
+  ID: 27
+  Key: BINDING_CURSE
+  Name: 绑定诅咒
+Enchant28:
+  ID: 28
+  Key: VANISHING_CURSE
+  Name: 消失诅咒
+Enchant29:
+  ID: 29
+  Key: IMPALING
+  Name: 穿刺
+Enchant30:
+  ID: 30
+  Key: RIPTIDE
+  Name: 激流
+Enchant31:
+  ID: 31
+  Key: LOYALTY
+  Name: 忠诚
+Enchant32:
+  ID: 32
+  Key: CHANNELING
+  Name: 引雷
+Enchant33:
+  ID: 33
+  Key: MULTISHOT
+  Name: 多重射击
+Enchant34:
+  ID: 34
+  Key: PIERCING
+  Name: 穿透
+Enchant35:
+  ID: 35
+  Key: QUICK_CHARGE
+  Name: 快速装填

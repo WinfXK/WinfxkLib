@@ -14,7 +14,7 @@ import java.util.Locale;
 public class AdminCommand extends Command {
     private WinfxkLib lib;
     private static final Message msg = WinfxkLib.getMessage();
-    private static final File file = new File(WinfxkLib.getConfigDir(), WinfxkLib.CommandFileName);
+    private static final File file = new File(WinfxkLib.getMain().getConfigDir(), WinfxkLib.CommandFileName);
     private static final Config config = new Config(file);
     private static final String Permission = "WinfxkLib.Command.Admin";
 

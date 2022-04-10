@@ -1,17 +1,18 @@
 package cn.winfxk.nukkit.winfxklib;
 
 import cn.nukkit.Player;
+import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
+import cn.nukkit.event.player.PlayerFormRespondedEvent;
+import cn.nukkit.event.player.PlayerJoinEvent;
+import cn.nukkit.event.player.PlayerQuitEvent;
+import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.plugin.Plugin;
-import cn.nukkit.plugin.PluginBase;
-import cn.winfxk.nukkit.winfxklib.form.Dispose;
+import cn.winfxk.nukkit.winfxklib.form.FormID;
 import cn.winfxk.nukkit.winfxklib.money.EasyEconomy;
 import cn.winfxk.nukkit.winfxklib.money.EconomyAPI;
 import cn.winfxk.nukkit.winfxklib.money.MyEconomy;
-import cn.winfxk.nukkit.winfxklib.tool.Config;
-import cn.winfxk.nukkit.winfxklib.tool.Itemlist;
-import cn.winfxk.nukkit.winfxklib.tool.MyMap;
-import cn.winfxk.nukkit.winfxklib.tool.Tool;
+import cn.winfxk.nukkit.winfxklib.tool.*;
 
 import java.io.File;
 import java.time.Duration;
@@ -19,13 +20,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WinfxkLib extends PluginBase implements Listener {
-    private static final Instant loadTime = Instant.now();
+public class WinfxkLib extends MyBase implements Listener {
+    private static Instant loadTime;
     public static final String MsgConfigName = "Message.yml";
     public static final String CommandFileName = "Command.yml";
     public static final String ConfigFileName = "Config.yml";
     public static final String ItemListFileName = "Itemlist.yml";
-    public static final String[] Meta = {MsgConfigName, ConfigFileName, ItemListFileName, CommandFileName};
+    public static final String EffectlistFileName = "Effectlist.yml";
+    public static final String EnchantListFileName = "Enchantlist.yml";
+    public static final String[] Meta = {MsgConfigName, ConfigFileName, ItemListFileName, CommandFileName, EnchantListFileName, EffectlistFileName};
     private static final MyMap<String, MyEconomy> Economys = new MyMap<>();
     protected static MyMap<String, MyPlayer> MyPlayers = new MyMap<>();
     private static File ConfigDir;
@@ -35,6 +38,42 @@ public class WinfxkLib extends PluginBase implements Listener {
     private static Message message;
     private static List<String> BlacklistEconomy;
     private Itemlist itemlist;
+    private Effectlist effectlist;
+    private Enchantlist enchantlist;
+    private static final FormID formID = new FormID();
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        WinfxkLib.getMyPlayers().put(player.getName(), new MyPlayer(player));
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        WinfxkLib.getMyPlayers().remove(player.getName());
+    }
+
+    @EventHandler
+    public void onFormResponded(PlayerFormRespondedEvent event) {
+        Player player = event.getPlayer();
+        MyPlayer myPlayer = WinfxkLib.getMyPlayer(player);
+        int ID = event.getFormID();
+        if (!formID.hasID(ID)) return;
+        try {
+            if (event.wasClosed())
+                if (myPlayer.fun != null)
+                    if (myPlayer.fun.wasClosed(player)) return;
+            FormResponse data = event.getResponse();
+            if (data == null) return;
+            if (myPlayer.fun != null)
+                myPlayer.fun.resolveResponded(player, data);
+            if (myPlayer.form != null) myPlayer.form.dispose(data);
+        } catch (Exception e) {
+            player.sendMessage(getName() + "出现问题！请联系服务器管理员。\nErrorCode: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     public static MyMap<String, MyPlayer> getMyPlayers() {
         return MyPlayers;
@@ -48,7 +87,8 @@ public class WinfxkLib extends PluginBase implements Listener {
         return itemlist;
     }
 
-    public static File getConfigDir() {
+    @Override
+    public File getConfigDir() {
         return ConfigDir;
     }
 
@@ -68,7 +108,9 @@ public class WinfxkLib extends PluginBase implements Listener {
 
     @Override
     public void onEnable() {
-        new Check(this).start();
+        loadTime = Instant.now();
+        ConfigDir = getDataFolder();
+        new Check(this, Meta, null).start();
         config = new Config(new File(ConfigDir, ConfigFileName));
         Economys.put("EasyEconomy", new EasyEconomy());
         BlacklistEconomy = config.getList("BlacklistEconomy", new ArrayList<>());
@@ -76,18 +118,26 @@ public class WinfxkLib extends PluginBase implements Listener {
         if (plugin != null)
             addEconomy(new EconomyAPI(this));
         setEconomy(config.getString("Economy"));
-        message = new Message(this);
+        message = new Message(this, new File(getConfigDir(), MsgConfigName));
         itemlist = new Itemlist();
+        effectlist = new Effectlist();
+        enchantlist = new Enchantlist();
         getServer().getCommandMap().register(getFullName() + "-Command", new AdminCommand(this));
-        getServer().getPluginManager().registerEvents(new Dispose(this), this);
         super.onEnable();
         getLogger().info(message.getMessage("插件启动", "{loadTime}", (float) Duration.between(loadTime, Instant.now()).toMillis() + "ms"));
+    }
+
+    public Enchantlist getEnchantlist() {
+        return enchantlist;
+    }
+
+    public Effectlist getEffectlist() {
+        return effectlist;
     }
 
     @Override
     public void onLoad() {
         main = this;
-        ConfigDir = getDataFolder();
         super.onLoad();
     }
 

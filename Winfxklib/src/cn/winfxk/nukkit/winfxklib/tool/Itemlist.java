@@ -6,10 +6,11 @@ import cn.winfxk.nukkit.winfxklib.WinfxkLib;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Itemlist {
-    private static final File file = new File(WinfxkLib.getConfigDir(), WinfxkLib.ItemListFileName);
+    private static final File file = new File(WinfxkLib.getMain().getConfigDir(), WinfxkLib.ItemListFileName);
     private static final MyMap<String, Itemlist> AllItems = new MyMap<>();
     private static final MyMap<String, Itemlist> NameItem = new MyMap<>();
     private static final MyMap<Integer, Itemlist> IDItem = new MyMap<>();
@@ -25,6 +26,7 @@ public class Itemlist {
     protected String Path;
     protected String SID;
     protected boolean Type;
+    protected Map<String, Object> map;
 
     static {
         Map<String, Object> map = config.getMap();
@@ -36,7 +38,7 @@ public class Itemlist {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 if (!(entry.getValue() instanceof Map)) continue;
                 map1 = (Map<String, Object>) entry.getValue();
-                item = new Itemlist(Tool.ObjToInt(map1.get("ID")), Tool.ObjToInt(map1.get("Damage")), Tool.objToString(map1.get("Name")), Tool.objToString(map1.get("Path")), entry.getKey(), !Tool.ObjToBool(map1.get("Type"), false));
+                item = new Itemlist(map1, entry.getKey());
                 AllItems.put(item.ID + ":" + item.Damage, item);
                 SIDItem.add(item.getSID(), item);
                 if (!IDItem.containsKey(item.ID))
@@ -46,6 +48,39 @@ public class Itemlist {
                 Items.add(item);
             }
         }
+    }
+
+    /**
+     * 根据'ID:Damage'的格式返回Item对象，哪怕没有该物品的自定义数据，除非系统真的不支持该物品
+     *
+     * @param AllID 物品ID
+     * @return
+     */
+    public Item setItem(String AllID) {
+        return setItem(AllID, (Item) null);
+    }
+
+    /**
+     * 根据'ID:Damage'的格式返回Item对象，哪怕没有该物品的自定义数据，除非系统真的不支持该物品
+     *
+     * @param AllID   物品ID
+     * @param Default 默认值
+     * @return
+     */
+    public Item setItem(String AllID, Item Default) {
+        if (AllID == null || AllID.isEmpty()) return Default;
+        String[] S = AllID.split(":");
+        if (S[0] == null || S[0].isEmpty() || !Tool.isInteger(S[0])) return Default;
+        return new Item(Tool.ObjToInt(S[0]), S.length >= 2 ? Tool.ObjToInt(S[1]) : 0);
+    }
+
+    protected Itemlist(int id, int damage, String name, String path, String sid, boolean type) {
+        ID = id;
+        Damage = damage;
+        Name = name;
+        Path = path;
+        SID = sid;
+        Type = type;
     }
 
     public static MyMap<String, Itemlist> getSIDItem() {
@@ -234,26 +269,22 @@ public class Itemlist {
                         return AllItems.get(ID + ":0");
             }
         }
-        if (NameItem.containsKey(Name))
-            return NameItem.get(Name);
+        if (NameItem.containsKey(Name.toLowerCase(Locale.ROOT)))
+            return NameItem.get(Name.toLowerCase(Locale.ROOT));
         return Default;
     }
 
     /**
      * 内部构建函数
-     *
-     * @param ID     物品ID
-     * @param Damage 物品特殊值
-     * @param Name   物品名称
-     * @param Path   物品图标路径
      */
-    protected Itemlist(int ID, int Damage, String Name, String Path, String SID, boolean Type) {
-        this.ID = ID;
-        this.Damage = Damage;
-        this.Name = Name;
-        this.Path = Path;
-        this.SID = SID;
-        this.Type = Type;
+    protected Itemlist(Map<String, Object> map, String Key) {
+        this.ID = Tool.ObjToInt(map.get("ID"));
+        this.Damage = Tool.ObjToInt(map.get("Damage"));
+        this.Name = Tool.objToString(map.get("Name")).toLowerCase(Locale.ROOT);
+        this.Path = Tool.objToString(map.get("Path"));
+        this.SID = Key;
+        this.Type = !Tool.ObjToBool(map.get("Type"), false);
+        this.map = map;
     }
 
     /**
@@ -284,6 +315,10 @@ public class Itemlist {
 
     public int getID() {
         return ID;
+    }
+
+    public Map<String, Object> getMap() {
+        return map;
     }
 
     /**

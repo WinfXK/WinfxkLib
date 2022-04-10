@@ -3,7 +3,7 @@ package cn.winfxk.nukkit.winfxklib;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.Utils;
-import cn.winfxk.nukkit.winfxklib.form.BaseForm;
+import cn.winfxk.nukkit.winfxklib.form.BaseFormin;
 import cn.winfxk.nukkit.winfxklib.tool.Config;
 import cn.winfxk.nukkit.winfxklib.tool.Tool;
 
@@ -20,24 +20,23 @@ import java.util.Map;
  */
 public class Message {
     private Config config;
-    private WinfxkLib kis;
-    public static final File file;
+    private MyBase kis;
+    public File file;
     private final SimpleDateFormat time;
     private final SimpleDateFormat date;
     private static final String ColorStart = "{RGBTextStart}", ColorEnd = "{RGBTextEnd}";
     private static final String[] Key = {"{n}", "{ServerName}", "{PluginName}", "{MoneyName}", "{Time}", "{Date}"};
-    private static Message message;
 
-    static {
-        file = new File(WinfxkLib.getConfigDir(), WinfxkLib.MsgConfigName);
-    }
-
-    public Message(WinfxkLib Bemilk) {
-        message = this;
+    public Message(MyBase Bemilk, File file) {
+        this.file = file;
         kis = Bemilk;
         time = new SimpleDateFormat("HH:mm:ss");
         date = new SimpleDateFormat("yyyy-MM-dd");
         load();
+    }
+
+    public Config getConfig() {
+        return config;
     }
 
     /**
@@ -71,7 +70,7 @@ public class Message {
      * @param form 获取语言文本的UI对象
      * @return
      */
-    public String getSun(String t, String Son, String Sun, BaseForm form) {
+    public String getSun(String t, String Son, String Sun, BaseFormin form) {
         Object object = config.get(t);
         Map<String, Object> map = object instanceof Map ? (Map<String, Object>) object : null;
         if (map == null)
@@ -215,7 +214,7 @@ public class Message {
      * @param form 获取语言文本的UI对象
      * @return
      */
-    public String getSon(String t, String Son, BaseForm form) {
+    public String getSon(String t, String Son, BaseFormin form) {
         Object object = config.get(t);
         if (!(object instanceof Map))
             return null;
@@ -300,7 +299,7 @@ public class Message {
         return getText(((Map<String, Object>) object).get(Son), Key, Data, player);
     }
 
-    public String getMessage(String t, BaseForm form) {
+    public String getMessage(String t, BaseFormin form) {
         return getText(config.get(t), form.getK(), form.getD(), form.getPlayer());
     }
 
@@ -372,7 +371,7 @@ public class Message {
      * @param form 要格式化文本的界面对象
      * @return
      */
-    public String getText(Object object, BaseForm form) {
+    public String getText(Object object, BaseFormin form) {
         return getText(object, form.getK(), form.getD(), form.getPlayer());
     }
 

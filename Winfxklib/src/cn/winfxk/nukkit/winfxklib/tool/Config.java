@@ -155,7 +155,7 @@ public class Config {
      */
     public Config(File file, Map<String, Object> map) {
         try {
-            if (file != null && file.exists()) {
+            if (file != null && file.exists() && !file.isDirectory()) {
                 Context = Utils.readFile(file);
                 this.map = new MyMap<>(yaml.loadAs(Context, Map.class));
             } else
