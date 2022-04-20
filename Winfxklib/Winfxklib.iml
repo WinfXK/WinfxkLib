@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
-    <orderEntry type="library" name="EconomyAPI_2.0.2" level="project" />
-    <orderEntry type="library" name="powernukkit-1.6.0.0-PN-SNAPSHOT-shaded" level="project" />
+    <orderEntry type="library" name="EconomyAPI" level="project" />
+    <orderEntry type="library" name="PowerNukkit" level="project" />
   </component>
 </module>

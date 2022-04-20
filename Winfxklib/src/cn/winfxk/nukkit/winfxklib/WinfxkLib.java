@@ -40,7 +40,7 @@ public class WinfxkLib extends MyBase implements Listener {
     private Itemlist itemlist;
     private Effectlist effectlist;
     private Enchantlist enchantlist;
-    private static final FormID formID = new FormID();
+    private static FormID formID;
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -122,6 +122,7 @@ public class WinfxkLib extends MyBase implements Listener {
         itemlist = new Itemlist();
         effectlist = new Effectlist();
         enchantlist = new Enchantlist();
+        formID = new FormID();
         getServer().getCommandMap().register(getFullName() + "-Command", new AdminCommand(this));
         super.onEnable();
         getLogger().info(message.getMessage("插件启动", "{loadTime}", (float) Duration.between(loadTime, Instant.now()).toMillis() + "ms"));

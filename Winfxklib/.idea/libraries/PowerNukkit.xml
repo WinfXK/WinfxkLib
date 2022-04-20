@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="PowerNukkit">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../Bin/PowerNukkit" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../Bin/PowerNukkit" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../Bin/PowerNukkit" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../Bin/PowerNukkit" recursive="false" type="SOURCES" />
+  </library>
+</component>

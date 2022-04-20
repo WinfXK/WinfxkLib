@@ -66,3 +66,9 @@ Form:
     NotInputName: §4请输入物品名称
     NotInputPath: §4请输入物品贴图路径
     AlterSucceed: 操作完成！
+Update:
+  检查更新: '§6正在检查更新中....    {n}§e若想关闭更新检查请在数据文件夹下创建更新文件§f“§6Update.yml§f”§e并且设置§f“§6StopUpdate§f”§e为§f“§6true§f”§e即可。'
+  更新异常: §4自动更新出现问题！{n}{Error}
+  连接失败: §4无法连接到更新服务器！
+  发现更新: §e发现新版本！{n}名称：{Name}->{newName}{n}版本：{Version}->{newVersion}{n}大小：{Size}->{newSize}{n}下载地址：{Download}{n}更新介绍：{UpdateMessage}
+  暂无更新: §e暂未发现更新版本。
