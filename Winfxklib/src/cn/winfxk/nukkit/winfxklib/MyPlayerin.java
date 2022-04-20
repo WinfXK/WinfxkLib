@@ -1,14 +1,14 @@
 package cn.winfxk.nukkit.winfxklib;
 
 import cn.nukkit.Player;
-import cn.winfxk.nukkit.winfxklib.form.BaseForm;
 import cn.winfxk.nukkit.winfxklib.form.BaseFormin;
+import cn.winfxk.nukkit.winfxklib.form.FormID;
 import cn.winfxk.nukkit.winfxklib.form.api.RootForm;
 
 public class MyPlayerin {
     public RootForm fun;
     public BaseFormin form;
-    private Player player;
+    protected Player player;
     public int ID;
 
     public MyPlayerin(Player player) {
@@ -51,7 +51,7 @@ public class MyPlayerin {
      * @param form   要显示的界面
      * @return 界面是否构建成功
      */
-    public static boolean showForm(Player player, BaseForm form) {
+    public static boolean showForm(Player player, BaseFormin form) {
         return showForm(player.getName(), form);
     }
 
@@ -62,7 +62,7 @@ public class MyPlayerin {
      * @param form   要显示的界面
      * @return 界面是否构建成功
      */
-    public static boolean showForm(String player, BaseForm form) {
+    public static boolean showForm(String player, BaseFormin form) {
         MyPlayerin myPlayer = WinfxkLib.getMyPlayer(player);
         return myPlayer == null ? false : myPlayer.showForm(form);
     }
@@ -73,7 +73,11 @@ public class MyPlayerin {
      * @param form 界面对象
      * @return 界面是否构建成功
      */
-    public boolean showForm(BaseForm form) {
+    public boolean showForm(BaseFormin form) {
         return (this.form = form).MakeForm();
+    }
+
+    public int getID() {
+        return FormID.formID.getID(ID);
     }
 }

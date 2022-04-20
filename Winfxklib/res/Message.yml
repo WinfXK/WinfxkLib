@@ -13,6 +13,7 @@ Form:
   Back: '{RandColor}返回'
   Exit: '{RandColor}关闭'
   Confirm: '{RandColor}确定'
+  Tip: "{RandColor}提示"
   NotPermissions: §4你没有权限完成此操作！
   PostData:
     Title: '{RandColor}数据管理'

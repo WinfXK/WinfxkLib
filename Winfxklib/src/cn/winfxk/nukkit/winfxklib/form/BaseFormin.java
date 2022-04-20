@@ -8,6 +8,8 @@ import cn.nukkit.form.response.FormResponseSimple;
 import cn.winfxk.nukkit.winfxklib.Message;
 import cn.winfxk.nukkit.winfxklib.MyPlayer;
 import cn.winfxk.nukkit.winfxklib.WinfxkLib;
+import cn.winfxk.nukkit.winfxklib.form.api.ModalForm;
+import cn.winfxk.nukkit.winfxklib.form.api.SimpleForm;
 import cn.winfxk.nukkit.winfxklib.tool.Tool;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public abstract class BaseFormin {
     protected String[] K = {"{Player}", "{Money}"};
     protected static final String MainKey = "Form";
     protected static Message message;
+    protected String FormKey;
 
     public void setD(Object... d) {
         D = d;
@@ -43,6 +46,7 @@ public abstract class BaseFormin {
         this.UpForm = Update;
         this.isBack = isBack;
         D = new Object[]{player.getName(), WinfxkLib.getMyPlayer(player).getMoney()};
+        FormKey = getClass().getSimpleName();
     }
 
 
@@ -50,7 +54,7 @@ public abstract class BaseFormin {
         return player;
     }
 
-    public boolean show(BaseForm form) {
+    public boolean show(BaseFormin form) {
         return (WinfxkLib.getMyPlayer(player).form = form).MakeForm();
     }
 
@@ -75,7 +79,7 @@ public abstract class BaseFormin {
     }
 
     protected String getString(String Key) {
-        return message.getSun(MainKey, getClass().getSimpleName(), Key, this);
+        return message.getSun(MainKey, FormKey, Key, this);
     }
 
     protected String getConfirm() {
@@ -83,7 +87,7 @@ public abstract class BaseFormin {
     }
 
     protected String getString(String Key, String[] Keys, Object[] Datas) {
-        return message.getSun(MainKey, getClass().getSimpleName(), Key,
+        return message.getSun(MainKey, FormKey, Key,
                 getArrayKeys(Keys, K),
                 Tool.Arrays(Datas, D), player);
     }
@@ -156,11 +160,108 @@ public abstract class BaseFormin {
         return message.getSon(MainKey, !isBack || UpForm == null ? "Exit" : "Back");
     }
 
+    protected String getExitString() {
+        return message.getSon(MainKey, "Exit", this);
+    }
+
+    protected String getBackString() {
+        return message.getSon(MainKey, "Back", this);
+    }
+
+    protected String getConfirmString() {
+        return message.getSon(MainKey, "Confirm", this);
+    }
+
     protected String getContent() {
         return getString("Content");
     }
 
     protected String getTitle() {
         return getString("Title");
+    }
+
+    /**
+     * 弹出一个提示框
+     *
+     * @param player  玩家名称
+     * @param Content 弹窗内容
+     * @return Back
+     */
+    public static boolean makeShow(Player player, String Content) {
+        return makeShow(true, player.getName(), message.getSon(MainKey, "Tip", player), Content, message.getSon(MainKey, "Confirm", player), null, message.getSon(MainKey, "Exit", player), null, false);
+    }
+
+    /**
+     * 弹出一个提示框
+     *
+     * @param player  玩家名称
+     * @param Title   弹窗标题
+     * @param Content 弹窗内容
+     * @param Back    返回值
+     * @return Back
+     */
+    public static boolean makeShow(Player player, String Title, String Content, boolean Back) {
+        return makeShow(true, player.getName(), Title, Content, message.getSon(MainKey, "Confirm", player), null, message.getSon(MainKey, "Exit", player), null, Back);
+    }
+
+    /**
+     * 弹出一个提示框
+     *
+     * @param isModle 是否是Modle界面
+     * @param player  玩家名称
+     * @param Title   弹窗标题
+     * @param Content 弹窗内容
+     * @param Button1 弹窗按钮文本1
+     * @param fun1    弹窗按钮1点击事件
+     * @param Button2 弹窗按钮2文本
+     * @param fun2    弹窗按钮2点击事件
+     * @return
+     */
+    public static boolean makeShow(boolean isModle, String player, String Title, String Content, String Button1, Disposeform fun1, String Button2, Disposeform fun2) {
+        MyPlayer myPlayer = WinfxkLib.getMyPlayer(player);
+        if (myPlayer == null)
+            return false;
+        if (isModle) {
+            ModalForm form = new ModalForm(myPlayer.getID(), Title, Content);
+            form.setButton(Button1, fun1, Button2, fun2);
+            form.show(myPlayer.getPlayer());
+            return true;
+        }
+        SimpleForm form = new SimpleForm(myPlayer.getID(), Title, Content);
+        form.addButton(Button1, fun1);
+        form.addButton(Button2, fun2);
+        form.show(myPlayer.getPlayer());
+        return true;
+    }
+
+    /**
+     * 弹出一个提示框
+     *
+     * @param isModle 是否是Modle界面
+     * @param player  玩家名称
+     * @param Title   弹窗标题
+     * @param Content 弹窗内容
+     * @param Button1 弹窗按钮文本1
+     * @param fun1    弹窗按钮1点击事件
+     * @param Button2 弹窗按钮2文本
+     * @param fun2    弹窗按钮2点击事件
+     * @param Back    返回值
+     * @return Back
+     */
+    public static boolean makeShow(boolean isModle, String player, String Title, String Content, String Button1, Disposeform fun1, String Button2, Disposeform fun2, boolean Back) {
+        MyPlayer myPlayer = WinfxkLib.getMyPlayer(player);
+        if (myPlayer == null)
+            return Back;
+        if (isModle) {
+            ModalForm form = new ModalForm(myPlayer.getID(), Title, Content);
+            form.setButton(Button1, fun1, Button2, fun2);
+            form.show(myPlayer.getPlayer());
+            return Back;
+        }
+        SimpleForm form = new SimpleForm(myPlayer.getID(), Title, Content);
+        form.addButton(Button1, fun1);
+        form.addButton(Button2, fun2);
+        form.show(myPlayer.getPlayer());
+        return Back;
     }
 }

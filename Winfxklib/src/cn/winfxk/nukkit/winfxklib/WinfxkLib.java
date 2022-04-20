@@ -51,7 +51,7 @@ public class WinfxkLib extends MyBase implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        WinfxkLib.getMyPlayers().remove(player.getName());
+        MyPlayers.remove(player.getName());
     }
 
     @EventHandler
