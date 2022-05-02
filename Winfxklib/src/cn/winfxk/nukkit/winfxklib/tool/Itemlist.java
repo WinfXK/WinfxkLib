@@ -246,6 +246,14 @@ public class Itemlist {
     public Itemlist getItem(Object obj, boolean strict, Itemlist Default) {
         if (obj == null) return Default;
         int ID, Damage;
+        if (obj instanceof Item) {
+            Item item = (Item) obj;
+            ID = item.getId();
+            Damage = item.getDamage();
+            if (AllItems.containsKey(ID + ":" + Damage))
+                return AllItems.get(ID + ":" + Damage);
+            return getNullItemlist(ID, Damage, item.hasCustomName() ? item.getCustomName() : item.getName(), null, null, true);
+        }
         String Name = Tool.objToString(obj);
         if (Name.isEmpty()) return Default;
         if (Tool.isInteger(obj)) {
@@ -272,6 +280,33 @@ public class Itemlist {
         if (NameItem.containsKey(Name.toLowerCase(Locale.ROOT)))
             return NameItem.get(Name.toLowerCase(Locale.ROOT));
         return Default;
+    }
+
+    /**
+     * 根据提供的数据返回一个不存在的数据
+     *
+     * @param ID      物品ID
+     * @param Damage  物品Damage
+     * @param Name    物品Name
+     * @param SID     物品SID
+     * @param Path    物品Path
+     * @param isLocal 物品是否是本地图标
+     * @return 不在系统集合内的数据
+     */
+    protected static Itemlist getNullItemlist(int ID, int Damage, String Name, String SID, String Path, boolean isLocal) {
+        Map<String, Object> map = new HashMap<>();
+        if (SID == null) {
+            String s = Tool.getRandString();
+            while (SIDItem.containsKey(s))
+                s += Tool.getRandString();
+        }
+        map.put("SID", SID);
+        map.put("ID", ID);
+        map.put("Damage", Damage);
+        map.put("Name", Name);
+        map.put("Path", Path);
+        map.put("isLocal", !isLocal);
+        return new Itemlist(map, SID);
     }
 
     /**

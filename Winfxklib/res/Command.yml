@@ -1,2 +1,6 @@
 AdminCommand:
+  - awlib
+  - awl
+PlayerCommand:
   - wlib
+  - wl

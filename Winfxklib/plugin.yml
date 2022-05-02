@@ -2,7 +2,7 @@ name: WinfxkLib
 main: cn.winfxk.nukkit.winfxklib.WinfxkLib
 api:
   - 1.0.0
-version: 1.1
+version: 1.2
 load: STARTUP
 website: http://Winfxk.cn
 author: Winfxk
@@ -13,3 +13,9 @@ permissions:
   WinfxkLib.Form.Item:
     description: 修改物品数据
     default: op
+  WinfxkLib.Command.Player:
+    description: 玩家命令
+    default: true
+  WinfxkLib.use.LeaveWord:
+    description: 留言面板权限
+    default: true

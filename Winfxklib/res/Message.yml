@@ -6,9 +6,40 @@ Command:
   AdminCommand:
     无权执行: 你没有权限执行此命令！
     Description: 管理员命令
-    usageMessage: /WinfxkLib help
+    usageMessage: /AdminWinfxkLib help
     Help: 插件帮助
     Add: 添加数据
+  PlayerCommand:
+    无权执行: 你没有权限执行此命令！
+    Description: '{PluginName}命令'
+    usageMessage: /WinfxkLib help
+    Help: 插件帮助
+    LeaveWord: 查看留言板
+LeaveWord:
+  JoinServer: '{RandColor}欢迎来到{ServerName}{RandColor}，您当前有{LeaveWordCount}条未读留言，使用“/WinfxkLib LeaveWord”可以查看您的留言。'
+  Unread:
+    Title: "{RandColor}未读留言"
+    Content: " "
+    NotLeaveWord: §4当前你还没有留言哦！
+    Item: '{RandColor}{LeaveWordTitle}   {LeaveWordDate}{n}{Streamline}'
+    ClearMessage: "{RandColor}清空留言"
+    ClearMessageSucceed: §4成功清空了所有的留言
+    Attachment: §4这个留言包含附件，请注意背包预留空间，否则可能会领取失败。
+    Accept: '{RandColor}已读留言'
+    AcceptAndDelete: §7已读并删除
+    Delete: §4删除留言
+    DeleteSucceed: §4删除成功！
+    Exception: §4出现异常！请联系管理员{n}{Error}
+  Main:
+    Title: "{RandColor}留言系统"
+    Content: " "
+    NotLeaveWord: §4当前你还没有留言哦！
+    Unread: "{RandColor}未读留言({LeaveWordCount})"
+    MarkRead: "{RandColor}已读留言({LeaveWordCount})"
+    AddLeaveWord: "{RandColor}添加留言({LeaveWordCount}/{LeaveWordAstrict})"
+    ClearMessage: "{RandColor}清空留言"
+    ClearMessageSucceed: §4成功清空了所有的留言
+    Sure: §4确定要删除所有留言吗？
 Form:
   Back: '{RandColor}返回'
   Exit: '{RandColor}关闭'

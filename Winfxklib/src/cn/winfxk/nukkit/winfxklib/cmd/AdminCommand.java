@@ -1,26 +1,17 @@
-package cn.winfxk.nukkit.winfxklib;
+package cn.winfxk.nukkit.winfxklib.cmd;
 
 import cn.nukkit.Player;
-import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
+import cn.winfxk.nukkit.winfxklib.MyPlayer;
 import cn.winfxk.nukkit.winfxklib.module.PostData;
-import cn.winfxk.nukkit.winfxklib.tool.Config;
 import cn.winfxk.nukkit.winfxklib.tool.Tool;
 
-import java.io.File;
 import java.util.Locale;
 
-public class AdminCommand extends Command {
-    private WinfxkLib lib;
-    private static final Message msg = WinfxkLib.getMessage();
-    private static final File file = new File(WinfxkLib.getMain().getConfigDir(), WinfxkLib.CommandFileName);
-    private static final Config config = new Config(file);
-    private static final String Permission = "WinfxkLib.Command.Admin";
-
-    public AdminCommand(WinfxkLib lib) {
-        super(lib.getName().toLowerCase(Locale.ROOT), msg.getSun("Command", "AdminCommand", "Description"), msg.getSun("Command", "AdminCommand", "usageMessage"), Tool.getArray(config.getList("AdminCommand"), new String[]{}));
-        this.lib = lib;
+public class AdminCommand extends MyCommand {
+    public AdminCommand() {
+        super("admin" + lib.getName().toLowerCase(Locale.ROOT), msg.getSun("Command", "AdminCommand", "Description"), msg.getSun("Command", "AdminCommand", "usageMessage"), Tool.getArray(config.getList("AdminCommand"), new String[]{}));
         commandParameters.clear();
         commandParameters.put(getString("Help"), new CommandParameter[]{new CommandParameter(getString("Help"), false, new String[]{"help"})});
         commandParameters.put(getString("Add"), new CommandParameter[]{new CommandParameter(getString("Add"), false, new String[]{"data", "数据"})});
@@ -28,7 +19,7 @@ public class AdminCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        if (!sender.hasPermission(Permission)) {
+        if (!sender.hasPermission(AdminPermission)) {
             sender.sendMessage(getString("无权执行"));
             return true;
         }
@@ -41,7 +32,6 @@ public class AdminCommand extends Command {
             sender.sendMessage(Tool.getCommandHelp(this));
             return true;
         }
-        String minorKey;
         switch (mainKey.toLowerCase(Locale.ROOT)) {
             case "data":
             case "数据":
@@ -50,9 +40,5 @@ public class AdminCommand extends Command {
                 sender.sendMessage(Tool.getCommandHelp(this));
         }
         return true;
-    }
-
-    private String getString(String Key) {
-        return msg.getSun("Command", "AdminCommand", Key);
     }
 }

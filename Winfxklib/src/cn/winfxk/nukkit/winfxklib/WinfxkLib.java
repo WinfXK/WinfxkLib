@@ -8,11 +8,15 @@ import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.plugin.Plugin;
+import cn.winfxk.nukkit.winfxklib.cmd.AdminCommand;
+import cn.winfxk.nukkit.winfxklib.cmd.PlayerCommand;
 import cn.winfxk.nukkit.winfxklib.form.FormID;
+import cn.winfxk.nukkit.winfxklib.module.leave_word.LeaveWord;
 import cn.winfxk.nukkit.winfxklib.money.EasyEconomy;
 import cn.winfxk.nukkit.winfxklib.money.EconomyAPI;
 import cn.winfxk.nukkit.winfxklib.money.MyEconomy;
 import cn.winfxk.nukkit.winfxklib.tool.*;
+import com.sun.org.apache.bcel.internal.generic.RET;
 
 import java.io.File;
 import java.time.Duration;
@@ -26,6 +30,7 @@ public class WinfxkLib extends MyBase implements Listener {
     public static final String CommandFileName = "Command.yml";
     public static final String ConfigFileName = "Config.yml";
     public static final String ItemListFileName = "Itemlist.yml";
+    public static final String LeaveWordFileName = "LeaveWord.yml";
     public static final String EffectlistFileName = "Effectlist.yml";
     public static final String EnchantListFileName = "Enchantlist.yml";
     public static final String[] Meta = {MsgConfigName, ConfigFileName, ItemListFileName, CommandFileName, EnchantListFileName, EffectlistFileName};
@@ -42,10 +47,15 @@ public class WinfxkLib extends MyBase implements Listener {
     private Enchantlist enchantlist;
     private static FormID formID;
 
+    public static List<String> getBlacklistEconomy() {
+        return BlacklistEconomy;
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         WinfxkLib.getMyPlayers().put(player.getName(), new MyPlayer(player));
+        LeaveWord.PlayerJoinEvent(player);
     }
 
     @EventHandler
@@ -73,6 +83,16 @@ public class WinfxkLib extends MyBase implements Listener {
             player.sendMessage(getName() + "出现问题！请联系服务器管理员。\nErrorCode: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Deprecated
+    @Override
+    public cn.nukkit.utils.Config getConfig() {
+        return null;
+    }
+
+    public static Config getconfig() {
+        return config;
     }
 
     public static MyMap<String, MyPlayer> getMyPlayers() {
@@ -123,7 +143,8 @@ public class WinfxkLib extends MyBase implements Listener {
         effectlist = new Effectlist();
         enchantlist = new Enchantlist();
         formID = new FormID();
-        getServer().getCommandMap().register(getFullName() + "-Command", new AdminCommand(this));
+        getServer().getCommandMap().register(getFullName() + "-AdminCommand", new AdminCommand());
+        getServer().getCommandMap().register(getFullName() + "-PlayerCommand", new PlayerCommand());
         super.onEnable();
         getLogger().info(message.getMessage("插件启动", "{loadTime}", (float) Duration.between(loadTime, Instant.now()).toMillis() + "ms"));
     }

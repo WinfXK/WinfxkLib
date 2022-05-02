@@ -21,7 +21,7 @@ public abstract class BaseFormin {
     private boolean isBack;
     private Object[] D;
     protected String[] K = {"{Player}", "{Money}"};
-    protected static final String MainKey = "Form";
+    protected final static String MainKey = "Form";
     protected static Message message;
     protected String FormKey;
 
@@ -76,6 +76,10 @@ public abstract class BaseFormin {
         myPlayer.form = null;
         myPlayer.fun = null;
         return false;
+    }
+
+    protected String NotPermissions() {
+        return message.getSon(MainKey, "NotPermissions", this);
     }
 
     protected String getString(String Key) {

@@ -7,3 +7,7 @@ EasyEconomy:
   Name: 狗屎
   ID: EasyEconomy
 物品列表页最大数量: 30
+#每日留言限制
+LeaveWordAstrict: 10
+#如果玩家配置文件不存在，是否允许留言
+UnrealLeaveWord: true

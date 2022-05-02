@@ -23,14 +23,34 @@ public class Check {
     private final MyBase kis;
     private int index = 0;
     public static Check check;
-    private String[] Meta, Mkdir;
+    /**
+     * 会与预留文件做参数匹配是否一致
+     */
+    private String[] Meta;
+    /**
+     * 想要存在的文件夹
+     */
+    private String[] Mkdir;
+    /**
+     * 只需判断文件是否存在，如果不存在写入一份默认文件不进行参数检查
+     */
+    private String[] Load;
     private File ConfigDir;
+
+    public Check(MyBase kis, String[] Meta, String[] Mkdir, String[] Load) {
+        this.kis = kis;
+        check = this;
+        this.Meta = Meta;
+        this.Mkdir = Mkdir;
+        this.Load = Load;
+    }
 
     public Check(MyBase kis, String[] Meta, String[] Mkdir) {
         this.kis = kis;
         check = this;
         this.Meta = Meta;
         this.Mkdir = Mkdir;
+        Load = null;
     }
 
     /**
@@ -122,17 +142,30 @@ public class Check {
         Message();
         Config config;
         Map<String, Object> map;
-        for (String string : Meta) {
-            config = new Config(new File(kis.getConfigDir(), string));
-            try {
-                map = Matc(Config.yaml.loadAs(Tool.getResource(string), Map.class), config.getMap());
-                config.setAll(map);
-                config.save();
-            } catch (Exception e) {
-                kis.getLogger().error("Unable to obtain resource: " + string);
-                continue;
+        if (Meta != null)
+            for (String string : Meta) {
+                config = new Config(new File(kis.getConfigDir(), string));
+                try {
+                    map = Matc(Config.yaml.loadAs(kis.getClass().getResourceAsStream("/res/" + string), Map.class), config.getMap());
+                    config.setAll(map);
+                    config.save();
+                } catch (Exception e) {
+                    kis.getLogger().error("Unable to obtain resource: " + string);
+                    continue;
+                }
             }
-        }
+        if (Load != null)
+            for (String s : Load) {
+                file = new File(kis.getConfigDir(), s);
+                if (!file.exists()) {
+                    try {
+                        Utils.writeFile(file, Utils.readFile(kis.getClass().getResourceAsStream("/res/" + s)));
+                    } catch (Exception e) {
+                        kis.getLogger().error("Unable to obtain resource: " + s);
+                        e.printStackTrace();
+                    }
+                }
+            }
         return index;
     }
 
