@@ -64,7 +64,7 @@ public class MyPlayerin {
      */
     public static boolean showForm(String player, BaseFormin form) {
         MyPlayerin myPlayer = WinfxkLib.getMyPlayer(player);
-        return myPlayer == null ? false : myPlayer.showForm(form);
+        return myPlayer != null && myPlayer.showForm(form);
     }
 
     /**

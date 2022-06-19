@@ -2,7 +2,7 @@ name: WinfxkLib
 main: cn.winfxk.nukkit.winfxklib.WinfxkLib
 api:
   - 1.0.0
-version: 1.2
+version: 1.1.22.6.19.12.33
 load: STARTUP
 website: http://Winfxk.cn
 author: Winfxk

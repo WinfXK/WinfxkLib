@@ -77,7 +77,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
             index++;
             Size /= 1024;
         }
-        return Tool.Double2(Size) + FileSizeUnit[index > FileSizeUnit.length - 1 ? FileSizeUnit.length - 1 : index];
+        return Tool.Double2(Size) + FileSizeUnit[Math.min(index, FileSizeUnit.length - 1)];
     }
 
     /**
@@ -1293,7 +1293,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
             String S = String.valueOf(obj);
             if (S == null || S.isEmpty())
                 return double1;
-            d = Double.valueOf(S);
+            d = Double.parseDouble(S);
         } catch (Exception e) {
             return double1;
         }
@@ -1310,12 +1310,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
      */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueAscending(Map<K, V> map) {
         List<Entry<K, V>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Entry<K, V>>() {
-            @Override
-            public int compare(Entry<K, V> a, Entry<K, V> b) {
-                return a.getValue().compareTo(b.getValue());
-            }
-        });
+        list.sort(Entry.comparingByValue());
         Map<K, V> result = new LinkedHashMap<>();
         for (Entry<K, V> entry : list)
             result.put(entry.getKey(), entry.getValue());
@@ -1332,12 +1327,7 @@ public class Tool implements X509TrustManager, HostnameVerifier {
      */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
         List<Entry<K, V>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Entry<K, V>>() {
-            @Override
-            public int compare(Entry<K, V> a, Entry<K, V> b) {
-                return -(a.getValue().compareTo(b.getValue()));
-            }
-        });
+        list.sort((a, b) -> -(a.getValue().compareTo(b.getValue())));
         Map<K, V> result = new LinkedHashMap<>();
         for (Entry<K, V> entry : list)
             result.put(entry.getKey(), entry.getValue());

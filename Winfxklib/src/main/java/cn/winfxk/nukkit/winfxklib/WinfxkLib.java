@@ -11,12 +11,11 @@ import cn.nukkit.plugin.Plugin;
 import cn.winfxk.nukkit.winfxklib.cmd.AdminCommand;
 import cn.winfxk.nukkit.winfxklib.cmd.PlayerCommand;
 import cn.winfxk.nukkit.winfxklib.form.FormID;
-import cn.winfxk.nukkit.winfxklib.module.leave_word.LeaveWord;
+import cn.winfxk.nukkit.winfxklib.module.LeaveWord;
 import cn.winfxk.nukkit.winfxklib.money.EasyEconomy;
 import cn.winfxk.nukkit.winfxklib.money.EconomyAPI;
 import cn.winfxk.nukkit.winfxklib.money.MyEconomy;
 import cn.winfxk.nukkit.winfxklib.tool.*;
-import com.sun.org.apache.bcel.internal.generic.RET;
 
 import java.io.File;
 import java.time.Duration;
@@ -85,6 +84,10 @@ public class WinfxkLib extends MyBase implements Listener {
         }
     }
 
+    public static List<MyEconomy> getEconomys() {
+        return new ArrayList<>(Economys.values());
+    }
+
     @Deprecated
     @Override
     public cn.nukkit.utils.Config getConfig() {
@@ -143,6 +146,7 @@ public class WinfxkLib extends MyBase implements Listener {
         effectlist = new Effectlist();
         enchantlist = new Enchantlist();
         formID = new FormID();
+        getServer().getPluginManager().registerEvents(this, this);
         getServer().getCommandMap().register(getFullName() + "-AdminCommand", new AdminCommand());
         getServer().getCommandMap().register(getFullName() + "-PlayerCommand", new PlayerCommand());
         super.onEnable();
@@ -188,7 +192,7 @@ public class WinfxkLib extends MyBase implements Listener {
      */
     public static MyEconomy getEconomy(String EconomyID) {
         if (BlacklistEconomy.contains(EconomyID)) return null;
-        return Economys.get(EconomyID);
+        return Economys.getOrDefault(EconomyID, null);
     }
 
     /**

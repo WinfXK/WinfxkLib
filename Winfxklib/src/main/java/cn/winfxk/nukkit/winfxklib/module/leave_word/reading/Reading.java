@@ -64,11 +64,11 @@ public class Reading extends LeaveWordForm {
             EsMap = (Map<String, Object>) entry.getValue();
             economy = WinfxkLib.getEconomy(Tool.objToString(EsMap.get("Economy")));
             if (economy == null) {
-                player.sendMessage(message.getSun(MainKey, FormKey, "Exception", ErrorKey, new Object[]{player.getName(), myPlayer.getMoney(), "不支持的经济支持"}));
+                player.sendMessage(message.getSun(MainKey, FormKey, "Exception", ErrorKey, new Object[]{player.getName(), myPlayer.getMoney(), "不支持的经济支持 " + EsMap.get("Economy")}));
                 continue;
             }
             if (WinfxkLib.getBlacklistEconomy().contains(economy.getEconomyName())) {
-                player.sendMessage(message.getSun(MainKey, FormKey, "Exception", ErrorKey, new Object[]{player.getName(), myPlayer.getMoney(), "被管理员禁用的经济支持"}));
+                player.sendMessage(message.getSun(MainKey, FormKey, "Exception", ErrorKey, new Object[]{player.getName(), myPlayer.getMoney(), "被管理员禁用的经济支持 " + EsMap.get("Economy")}));
                 continue;
             }
             economy.addMoney(player.getName(), Tool.objToDouble(EsMap.get("Money")));

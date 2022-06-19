@@ -17,6 +17,46 @@ Command:
     LeaveWord: 查看留言板
 LeaveWord:
   JoinServer: '{RandColor}欢迎来到{ServerName}{RandColor}，您当前有{LeaveWordCount}条未读留言，使用“/WinfxkLib LeaveWord”可以查看您的留言。'
+  AddLeaveWord:
+    Title: '{RandColor}添加留言'
+    Content: " "
+    AddLeaveWord: §4添加留言
+    AddItem: §4添加物品
+    ItemContent: '§4Item§f: §6{ItemName}§f(§6{ItemID}§f:§6{ItemDamage}§f)'
+    ClickDelete: §4点击可以删除物品
+    SelectItem: §4选择一个要添加的物品
+    ItemCountNUll: §4物品数量不合法！请输入一个大于零的纯整数。
+    ItemCountExcessive: §4您的物品不足！
+    ItemCount: §4请输入投送的物品数量
+    ItemAddSucceed: §4物品添加成功！
+    EconomyContent: '§5Money§f: §6{EconomyID}§f>§b>§2{EconomyMoney}§6{EconomyUnits}'
+    EconomyNUll: §4输入的金额数量不合法！这个数只能是一个大于零的纯数字！
+    EconomyExcessive: §4您的资产不足！
+    EconomyMoney: §4请输入金额
+    AddEconomy: §4添加金钱
+    EconomyAddSucceed: §4资产添加成功！
+    ClickDeleteEconomy: §4点击删除附带款项
+    SelectEconomy: §4请选择经济种类
+    LeaveWordTitle: §4留言标题
+    LeaveWordContent: §4留言内容
+    LeaveWordContentIsNull: §4请输入想要留言的内容！
+    Recipients: §4收件人名称<请注意区分大小写>
+    RecipientsDropdown: §4请选择收件人，若上方编辑框已输入内容则本行不生效
+    PlayerNull: §4请输入收件人名称
+    Succeed: §4留言成功！
+  MarkRead:
+    Title: "{RandColor}已读读留言"
+    Content: " "
+    NotLeaveWord: §4当前你还没有留言哦！
+    Item: '{RandColor}{LeaveWordTitle}   {LeaveWordDate}{n}{Streamline}'
+    ClearMessage: "{RandColor}清空留言"
+    ClearMessageSucceed: §4成功清空了所有的留言
+    DeleteSucceed: §4删除成功！
+    Exception: §4出现异常！请联系管理员{n}{Error}
+    ShowAccessory: §4显示附件
+    ShowAccessoryContent: '{n}{n}所有附件均在阅读时发放，点击任意按钮返回上级'
+    ItemButton: '§4Item§f: §6{ItemName}§f(§6{ItemID}§f:§6{ItemDamage}§f)'
+    EconomyButton: '§5Money§f: §6{EconomyID}§f>§b>§2{EconomyMoney}§6{EconomyUnits}'
   Unread:
     Title: "{RandColor}未读留言"
     Content: " "

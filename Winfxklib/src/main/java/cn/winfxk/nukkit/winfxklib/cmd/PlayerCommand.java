@@ -4,14 +4,14 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParameter;
 import cn.winfxk.nukkit.winfxklib.MyPlayer;
 import cn.winfxk.nukkit.winfxklib.WinfxkLib;
-import cn.winfxk.nukkit.winfxklib.module.leave_word.LeaveWord;
+import cn.winfxk.nukkit.winfxklib.module.LeaveWord;
 import cn.winfxk.nukkit.winfxklib.tool.Tool;
 
 import java.util.Locale;
 
 public class PlayerCommand extends MyCommand {
     public PlayerCommand() {
-        super("admin-" + lib.getName().toLowerCase(Locale.ROOT), msg.getSun("Command", "PlayerCommand", "Description"), msg.getSun("Command", "PlayerCommand", "usageMessage"), Tool.getArray(config.getList("PlayerCommand"), new String[]{}));
+        super(lib.getName().toLowerCase(Locale.ROOT), msg.getSun("Command", "PlayerCommand", "Description"), msg.getSun("Command", "PlayerCommand", "usageMessage"), Tool.getArray(config.getList("PlayerCommand"), new String[]{}));
         commandParameters.clear();
         commandParameters.put(getString("Help"), new CommandParameter[]{new CommandParameter(getString("Help"), false, new String[]{"help", "h"})});
         commandParameters.put(getString("LeaveWord"), new CommandParameter[]{new CommandParameter(getString("LeaveWord"), false, new String[]{"leaveword", "lw"})});
