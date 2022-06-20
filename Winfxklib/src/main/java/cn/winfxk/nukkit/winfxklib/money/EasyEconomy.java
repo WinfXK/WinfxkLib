@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class EasyEconomy extends MyEconomy {
     private static final String Economy, Money;
+    public static EasyEconomy MyEconomy;
 
     static {
         Map<String, Object> map = WinfxkLib.getMyConfig().getMap("EasyEconomy", new MyMap<>());
@@ -21,6 +22,7 @@ public class EasyEconomy extends MyEconomy {
      */
     public EasyEconomy() {
         super(Economy, Money);
+        if (MyEconomy == null) MyEconomy = this;
     }
 
     @Override

@@ -88,12 +88,6 @@ public class WinfxkLib extends MyBase implements Listener {
         return new ArrayList<>(Economys.values());
     }
 
-    @Deprecated
-    @Override
-    public cn.nukkit.utils.Config getConfig() {
-        return null;
-    }
-
     public static Config getconfig() {
         return config;
     }
@@ -243,7 +237,12 @@ public class WinfxkLib extends MyBase implements Listener {
      * @return
      */
     public static MyEconomy getEconomy() {
-        return economy;
+        if (economy == null) {
+            List<String> list = new ArrayList<>(Economys.keySet());
+            for (String s : list)
+                if (!BlacklistEconomy.contains(s)) economy = Economys.get(s);
+        }
+        return economy == null ? economy = EasyEconomy.MyEconomy : economy;
     }
 
     public static MyPlayer getMyPlayer(String player) {

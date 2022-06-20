@@ -1,5 +1,8 @@
 package cn.winfxk.nukkit.winfxklib.tool;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.command.ConsoleCommandSender;
 import cn.nukkit.item.Item;
 import cn.winfxk.nukkit.winfxklib.WinfxkLib;
 import cn.winfxk.nukkit.winfxklib.module.LeaveWord;
@@ -9,10 +12,58 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ItemLoad {
-    @Contract("null, !null -> param2")
+    public static @NotNull List<MyCommand> getCommand(List<String> list, List<MyCommand> defList) {
+        if (defList == null) defList = new ArrayList<>();
+        if (list == null || list.size() <= 0) return defList;
+        MyCommand command;
+        String[] strings;
+        String string;
+        for (String s : list) {
+            command = new MyCommand();
+            if (s.contains("|")) {
+                strings = s.split("|");
+                if (strings.length <= 0) continue;
+                else if (strings.length == 1) {
+                    command.Permission = MyCommand.PlayerPermission;
+                    command.Command = s;
+                    defList.add(command);
+                    continue;
+                } else {
+                    if (strings[0] != null) {
+                        switch (strings[0].toLowerCase(Locale.ROOT)) {
+                            case MyCommand.ConsolePermission:
+                            case MyCommand.OPPermission:
+                            case MyCommand.PlayerPermission:
+                                command.Permission = strings[0];
+                                command.Command = "";
+                                for (int i = 1; i < strings.length; i++)
+                                    command.Command += (command.Command.isEmpty() ? "" : " ") + strings[i];
+                                defList.add(command);
+                                continue;
+                            default:
+                                command.Permission = MyCommand.PlayerPermission;
+                                command.Command = s;
+                                defList.add(command);
+                        }
+                        continue;
+                    }
+                    command.Permission = MyCommand.PlayerPermission;
+                    command.Command = s;
+                    defList.add(command);
+                }
+                continue;
+            }
+            command.Permission = MyCommand.PlayerPermission;
+            command.Command = s;
+            defList.add(command);
+        }
+        return defList;
+    }
+
     public static @NotNull List<LeaveWord.Economy> getEconomy(Map<String, Object> map, List<LeaveWord.Economy> list) {
         if (list == null) list = new ArrayList<>();
         if (map == null || map.isEmpty()) return list;
@@ -84,5 +135,44 @@ public class ItemLoad {
             }
         }
         return list;
+    }
+
+   public static class MyCommand {
+        public static final String PlayerPermission = "player", OPPermission = "op", ConsolePermission = "console";
+        public String Permission, Command, codeCommand;
+        private transient boolean isThread = false;
+
+        public boolean onCommand(Player player) {
+            if (codeCommand == null)
+                codeCommand = WinfxkLib.getMessage().getText(Command, player);
+            switch (Permission.toLowerCase(Locale.ROOT)) {
+                case ConsolePermission:
+                    Server.getInstance().dispatchCommand(new ConsoleCommandSender(), codeCommand);
+                    break;
+                case OPPermission:
+                    if (player.isOp()) Server.getInstance().dispatchCommand(player, codeCommand);
+                    else new Thread(() -> onRun(player, codeCommand)).start();
+                    break;
+                default:
+                    Server.getInstance().dispatchCommand(player, codeCommand);
+            }
+            return true;
+        }
+
+        protected void onRun(Player player, String codeCommand) {
+            if (isThread) return;
+            isThread = true;
+            try {
+                player.setOp(true);
+                Thread.sleep(10);
+                Server.getInstance().dispatchCommand(player, codeCommand);
+                Thread.sleep(50);
+                player.setOp(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                player.setOp(false);
+            }
+        }
     }
 }
