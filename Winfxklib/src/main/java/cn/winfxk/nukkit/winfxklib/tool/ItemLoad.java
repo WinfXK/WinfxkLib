@@ -10,10 +10,7 @@ import cn.winfxk.nukkit.winfxklib.money.MyEconomy;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class ItemLoad {
     public static @NotNull List<MyCommand> getCommand(List<String> list, List<MyCommand> defList) {
@@ -25,7 +22,7 @@ public class ItemLoad {
         for (String s : list) {
             command = new MyCommand();
             if (s.contains("|")) {
-                strings = s.split("|");
+                strings = s.split("\\|");
                 if (strings.length <= 0) continue;
                 else if (strings.length == 1) {
                     command.Permission = MyCommand.PlayerPermission;
@@ -118,7 +115,7 @@ public class ItemLoad {
                     continue;
                 }
                 if (SID.contains("|")) {
-                    strings = SID.split("|");
+                    strings = SID.split("\\|");
                     itemlist = WinfxkLib.getMain().getItemlist().getItem(strings[0]);
                     if (itemlist == null) continue;
                     item = itemlist.getItem();
@@ -137,7 +134,7 @@ public class ItemLoad {
         return list;
     }
 
-   public static class MyCommand {
+    public static class MyCommand {
         public static final String PlayerPermission = "player", OPPermission = "op", ConsolePermission = "console";
         public String Permission, Command, codeCommand;
         private transient boolean isThread = false;

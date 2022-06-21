@@ -2,6 +2,7 @@ lang: chs
 插件启动: '{RGBTextStart}{PluginName}启动(耗时: {loadTime})...{RGBTextEnd}        §6欢迎{RGBTextStart}使用{PluginName}{RGBTextEnd}§f(*￣︶￣)'
 插件关闭: '{RGBTextStart}{PluginName}关闭！本次使用时长： {loadTime})...{RGBTextEnd}'
 NotPlayer: §4请在游戏内执行此命令!
+增加经济支持: §4获得一个新的经济支持（{NewEconomyName}-{NewMoneyName}）！
 Command:
   AdminCommand:
     无权执行: 你没有权限执行此命令！

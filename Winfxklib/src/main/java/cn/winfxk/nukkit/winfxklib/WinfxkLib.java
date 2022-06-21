@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WinfxkLib extends MyBase implements Listener {
+    private static final String[] newEconomyKey = {"{NewEconomyName}", "{NewMoneyName}"};
     private static Instant loadTime;
     public static final String MsgConfigName = "Message.yml";
     public static final String CommandFileName = "Command.yml";
@@ -129,13 +130,14 @@ public class WinfxkLib extends MyBase implements Listener {
         ConfigDir = getDataFolder();
         new Check(this, Meta, null).start();
         config = new Config(new File(ConfigDir, ConfigFileName));
-        Economys.put("EasyEconomy", new EasyEconomy());
+        Economys.put("EasyEconomy", economy = new EasyEconomy());
+        getLogger().info("§4We will increase basic Economy support");
         BlacklistEconomy = config.getList("BlacklistEconomy", new ArrayList<>());
         Plugin plugin = getServer().getPluginManager().getPlugin("EconomyAPI");
+        message = new Message(this, new File(getConfigDir(), MsgConfigName));
         if (plugin != null)
             addEconomy(new EconomyAPI(this));
         setEconomy(config.getString("Economy"));
-        message = new Message(this, new File(getConfigDir(), MsgConfigName));
         itemlist = new Itemlist();
         effectlist = new Effectlist();
         enchantlist = new Enchantlist();
@@ -171,10 +173,11 @@ public class WinfxkLib extends MyBase implements Listener {
         if (BlacklistEconomy.contains(EconomyID)) return false;
         if (!Economys.containsKey(EconomyID)) {
             if (economy != null) return false;
-            economy = getEconomy("EasyEconomy");
+            economy = EasyEconomy.MyEconomy;
             return false;
         }
         economy = Economys.get(EconomyID);
+        message.load();
         return true;
     }
 
@@ -215,6 +218,7 @@ public class WinfxkLib extends MyBase implements Listener {
             return false;
         Economys.put(Economy.getEconomyName(), Economy);
         config.set("Economylist", new ArrayList<>(Economys.keySet())).save();
+        WinfxkLib.main.getLogger().info(message.getMessage("增加经济支持", newEconomyKey, new Object[]{Economy.getEconomyName(), Economy.getMoneyName()}));
         return Economys.containsKey(Economy.getEconomyName());
     }
 
@@ -228,6 +232,7 @@ public class WinfxkLib extends MyBase implements Listener {
         if (BlacklistEconomy.contains(EconomyID) || EconomyID.equals("EasyEconomy")) return false;
         Economys.put(EconomyID, Economy);
         config.set("Economylist", new ArrayList<>(Economys.keySet())).save();
+        WinfxkLib.main.getLogger().info(message.getMessage("增加经济支持", newEconomyKey, new Object[]{Economy.getEconomyName(), Economy.getMoneyName()}));
         return Economys.containsKey(EconomyID);
     }
 

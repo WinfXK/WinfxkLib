@@ -32,6 +32,19 @@ public abstract class MyBase extends PluginBase {
         return list;
     }
 
+    /**
+     * 获取当前插件可用的经济支持
+     *
+     * @param s
+     * @return
+     */
+    public MyEconomy getMyEconomy(String s) {
+        if (BlockEconomys.contains(s)) return null;
+        for (MyEconomy economy : WinfxkLib.getEconomys())
+            if (s.equals(economy.getEconomyName())) return economy;
+        return null;
+    }
+
     @Deprecated
     @Override
     public cn.nukkit.utils.Config getConfig() {
@@ -63,7 +76,6 @@ public abstract class MyBase extends PluginBase {
         super.onEnable();
         new Update(this).start();
         BaseConfig = new Config(BaseConfigFile = new File(getConfigDir(), "Economylist.yml"));
-        if (BaseConfig.containsKey("BlockEconomys"))
-            BlockEconomys = BaseConfig.getList("BlockEconomys", new ArrayList<>());
+        BlockEconomys = BaseConfig.containsKey("BlockEconomys") ? BaseConfig.getList("BlockEconomys", new ArrayList<>()) : new ArrayList<>();
     }
 }
