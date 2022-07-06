@@ -64,7 +64,7 @@ public class Update extends Thread {
         Socket socket = new Socket(Server, Port);
         DataInputStream Input = new DataInputStream(socket.getInputStream());
         DataOutputStream Output = new DataOutputStream(socket.getOutputStream());
-        Output.writeUTF(Config.yaml.dump(map));
+        Output.writeUTF(MyMap.yaml.dump(map));
         String string = Input.readUTF();
         try {
             Input.close();
@@ -72,6 +72,6 @@ public class Update extends Thread {
             socket.close();
         } catch (Exception e) {
         }
-        return Config.yaml.loadAs(string, Map.class);
+        return MyMap.yaml.loadAs(string, Map.class);
     }
 }

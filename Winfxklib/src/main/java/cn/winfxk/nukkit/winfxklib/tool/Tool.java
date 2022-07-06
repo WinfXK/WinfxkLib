@@ -51,7 +51,6 @@ public class Tool implements X509TrustManager, HostnameVerifier {
             }
         return v;
     }
-
     /**
      * 返回文件大小
      *
@@ -238,6 +237,11 @@ public class Tool implements X509TrustManager, HostnameVerifier {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Object o = map.get("Lore");
+        if (o instanceof List) {
+            List<String> list = (List<String>) o;
+            item.setLore(list.toArray(new String[]{}));
+        } else if (o != null) item.setLore(Tool.objToString(o));
         return item;
     }
 

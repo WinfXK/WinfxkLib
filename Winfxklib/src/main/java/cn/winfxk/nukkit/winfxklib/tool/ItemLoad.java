@@ -140,18 +140,22 @@ public class ItemLoad {
         private transient boolean isThread = false;
 
         public boolean onCommand(Player player) {
-            if (codeCommand == null)
-                codeCommand = WinfxkLib.getMessage().getText(Command, player);
-            switch (Permission.toLowerCase(Locale.ROOT)) {
-                case ConsolePermission:
-                    Server.getInstance().dispatchCommand(new ConsoleCommandSender(), codeCommand);
-                    break;
-                case OPPermission:
-                    if (player.isOp()) Server.getInstance().dispatchCommand(player, codeCommand);
-                    else new Thread(() -> onRun(player, codeCommand)).start();
-                    break;
-                default:
-                    Server.getInstance().dispatchCommand(player, codeCommand);
+            codeCommand = WinfxkLib.getMessage().getText(Command, player);
+            if (codeCommand == null || codeCommand.isEmpty() || player == null || !player.isOnline()) return false;
+            try {
+                switch (Permission.toLowerCase(Locale.ROOT)) {
+                    case ConsolePermission:
+                        Server.getInstance().dispatchCommand(new ConsoleCommandSender(), codeCommand);
+                        break;
+                    case OPPermission:
+                        if (player.isOp()) Server.getInstance().dispatchCommand(player, codeCommand);
+                        else new Thread(() -> onRun(player, codeCommand)).start();
+                        break;
+                    default:
+                        Server.getInstance().dispatchCommand(player, codeCommand);
+                }
+            } catch (Exception e) {
+
             }
             return true;
         }

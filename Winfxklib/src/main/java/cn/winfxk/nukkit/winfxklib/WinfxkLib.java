@@ -25,7 +25,6 @@ import java.util.List;
 
 public class WinfxkLib extends MyBase implements Listener {
     private static final String[] newEconomyKey = {"{NewEconomyName}", "{NewMoneyName}"};
-    private static Instant loadTime;
     public static final String MsgConfigName = "Message.yml";
     public static final String CommandFileName = "Command.yml";
     public static final String ConfigFileName = "Config.yml";

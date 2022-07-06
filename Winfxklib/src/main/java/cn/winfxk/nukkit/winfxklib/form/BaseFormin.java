@@ -79,7 +79,7 @@ public abstract class BaseFormin {
     }
 
     protected String NotPermissions() {
-        return message.getSon(MainKey, "NotPermissions", this);
+        return WinfxkLib.getMessage().getSon(MainKey, "NotPermissions", this);
     }
 
     protected String getString(String Key) {
@@ -87,7 +87,7 @@ public abstract class BaseFormin {
     }
 
     protected String getConfirm() {
-        return message.getSon(MainKey, "Confirm", this);
+        return WinfxkLib.getMessage().getSon(MainKey, "Confirm", this);
     }
 
     protected String getString(String Key, String[] Keys, Object[] Datas) {
@@ -157,23 +157,23 @@ public abstract class BaseFormin {
     }
 
     protected boolean isBack() {
-        return !isBack || UpForm == null ? false : UpForm.MakeForm();
+        return isBack && UpForm != null && UpForm.MakeForm();
     }
 
     protected String getBack() {
-        return message.getSon(MainKey, !isBack || UpForm == null ? "Exit" : "Back");
+        return WinfxkLib.getMessage().getSon("Form", !isBack || UpForm == null ? "Exit" : "Back");
     }
 
     protected String getExitString() {
-        return message.getSon(MainKey, "Exit", this);
+        return WinfxkLib.getMessage().getSon("Form", "Exit", this);
     }
 
     protected String getBackString() {
-        return message.getSon(MainKey, "Back", this);
+        return WinfxkLib.getMessage().getSon("Form", "Back", this);
     }
 
     protected String getConfirmString() {
-        return message.getSon(MainKey, "Confirm", this);
+        return WinfxkLib.getMessage().getSon("Form", "Confirm", this);
     }
 
     protected String getContent() {

@@ -188,4 +188,11 @@ public class Config {
     public void setAll(Map<String, Object> map) {
         this.map = new MyMap<>(map);
     }
+
+    @Override
+    public String toString() {
+        return "Config{" +
+                "Context='" + Context + '\'' +
+                '}';
+    }
 }

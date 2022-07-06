@@ -18,11 +18,11 @@ import java.util.Map;
  */
 public class MyMap<K, V> extends LinkedHashMap<K, V> {
 	private static final long serialVersionUID = -8324429888407081347L;
-	public static final Yaml Yaml;
+	public static final Yaml yaml;
 	static {
 		DumperOptions dumperOptions = new DumperOptions();
 		dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-		Yaml = new Yaml(dumperOptions);
+		yaml = new Yaml(dumperOptions);
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class MyMap<K, V> extends LinkedHashMap<K, V> {
 	 */
 	@Override
 	public String toString() {
-		return Yaml.dump(this);
+		return yaml.dump(this);
 	}
 
 	@Override

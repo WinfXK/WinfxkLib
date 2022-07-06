@@ -4,7 +4,9 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.Utils;
 import cn.winfxk.nukkit.winfxklib.form.BaseFormin;
+import cn.winfxk.nukkit.winfxklib.money.MyEconomy;
 import cn.winfxk.nukkit.winfxklib.tool.Config;
+import cn.winfxk.nukkit.winfxklib.tool.MyMap;
 import cn.winfxk.nukkit.winfxklib.tool.Tool;
 
 import java.io.File;
@@ -20,7 +22,8 @@ import java.util.Map;
  */
 public class Message {
     private Config config;
-    private MyBase kis;
+    private final MyBase kis;
+    private MyEconomy economy;
     public File file;
     private final SimpleDateFormat time;
     private final SimpleDateFormat date;
@@ -28,11 +31,24 @@ public class Message {
     private static final String[] Key = {"{n}", "{ServerName}", "{PluginName}", "{MoneyName}", "{Time}", "{Date}"};
 
     public Message(MyBase Bemilk, File file) {
+        this(Bemilk, file, WinfxkLib.getEconomy());
+    }
+
+    public Message(MyBase Bemilk, File file, MyEconomy economy) {
+        this.economy = economy;
         this.file = file;
         kis = Bemilk;
         time = new SimpleDateFormat("HH:mm:ss");
         date = new SimpleDateFormat("yyyy-MM-dd");
         load();
+    }
+
+    public void setEconomy(MyEconomy economy) {
+        this.economy = economy;
+    }
+
+    public MyEconomy getEconomy() {
+        return economy;
     }
 
     public Config getConfig() {
@@ -55,8 +71,8 @@ public class Message {
      * @throws IOException
      */
     public synchronized boolean reload(String Content) throws IOException {
-        Map<String, Object> map = Check.check.Matc(Config.yaml.loadAs(Tool.getResource("Message.yml"), Map.class), Config.yaml.loadAs(Content, Map.class));
-        Utils.writeFile(file, Config.yaml.dump(map));
+        Map<String, Object> map = Check.check.Matc(MyMap.yaml.loadAs(Tool.getResource("Message.yml"), Map.class), MyMap.yaml.loadAs(Content, Map.class));
+        Utils.writeFile(file, MyMap.yaml.dump(map));
         config = new Config(file);
         return true;
     }
@@ -419,7 +435,7 @@ public class Message {
             text = text.replace(Message.Key[i], strings[i]);
         if (player != null) {
             text = text.replace("{Player}", player.getName());
-            text = text.replace("{Money}", Tool.objToString(WinfxkLib.getEconomy().getMoney(player)));
+            text = text.replace("{Money}", Tool.objToString(economy.getMoney(player)));
         }
         if (text.contains("{RandColor}")) {
             strings = text.split("\\{RandColor\\}");
@@ -457,7 +473,7 @@ public class Message {
             text = text.replace(Message.Key[i], strings[i]);
         if (player != null) {
             text = text.replace("{Player}", player.getName());
-            text = text.replace("{Money}", Tool.objToString(WinfxkLib.getEconomy().getMoney(player)));
+            text = text.replace("{Money}", Tool.objToString(economy.getMoney(player)));
         }
         if (text.contains("{RandColor}")) {
             strings = text.split("\\{RandColor\\}");
@@ -480,6 +496,6 @@ public class Message {
      * @return
      */
     public String[] getData() {
-        return new String[]{"\n", Server.getInstance().getName(), kis.getName(), WinfxkLib.getEconomy().getMoneyName(), time.format(new Date()), date.format(new Date())};
+        return new String[]{"\n", Server.getInstance().getName(), kis.getName(), economy.getMoneyName(), time.format(new Date()), date.format(new Date())};
     }
 }

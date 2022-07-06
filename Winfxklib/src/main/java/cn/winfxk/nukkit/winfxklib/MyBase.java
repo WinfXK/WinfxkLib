@@ -6,6 +6,7 @@ import cn.winfxk.nukkit.winfxklib.tool.Config;
 import cn.winfxk.nukkit.winfxklib.tool.Update;
 
 import java.io.File;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public abstract class MyBase extends PluginBase {
     protected Config BaseConfig;
     protected File BaseConfigFile;
     private List<String> BlockEconomys;
+    protected static Instant loadTime;
 
     public abstract File getConfigDir();
 
@@ -39,7 +41,7 @@ public abstract class MyBase extends PluginBase {
      * @return
      */
     public MyEconomy getMyEconomy(String s) {
-        if (BlockEconomys.contains(s)) return null;
+        if (s == null || s.isEmpty() || BlockEconomys.contains(s)) return null;
         for (MyEconomy economy : WinfxkLib.getEconomys())
             if (s.equals(economy.getEconomyName())) return economy;
         return null;
@@ -75,6 +77,7 @@ public abstract class MyBase extends PluginBase {
     public void onEnable() {
         super.onEnable();
         new Update(this).start();
+        ConfigDir = getDataFolder();
         BaseConfig = new Config(BaseConfigFile = new File(getConfigDir(), "Economylist.yml"));
         BlockEconomys = BaseConfig.containsKey("BlockEconomys") ? BaseConfig.getList("BlockEconomys", new ArrayList<>()) : new ArrayList<>();
     }
